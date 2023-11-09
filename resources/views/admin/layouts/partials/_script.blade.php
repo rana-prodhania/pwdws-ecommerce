@@ -5,6 +5,8 @@
 <script src="{{ asset('assets/backend/vendors/jquery-slimscroll/jquery.slimscroll.min.js') }}" type="text/javascript">
 </script>
 <!-- PAGE LEVEL PLUGINS-->
+@stack('page_js')
 <!-- CORE SCRIPTS-->
 <script src="{{ asset('assets/backend/js/app.min.js') }}" type="text/javascript"></script>
 <!-- PAGE LEVEL SCRIPTS-->
+@stack('custom_js')
