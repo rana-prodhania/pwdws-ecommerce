@@ -20,19 +20,20 @@
         </div> --}}
         <div class="ibox">
             <div class="ibox-head">
-                <div class="ibox-title">Category Create</div>
+                <div class="ibox-title">Category Edit</div>
                 <div class="ibox-tools">
                     <a class="ibox-collapse"><i class="fa fa-minus"></i></a>
                     <a class="fullscreen-link"><i class="fa fa-expand"></i></a>
                 </div>
             </div>
             <div class="ibox-body" style="">
-                <form action="{{ route('admin.category.store') }}" method="POST" class="form-horizontal">
+                <form action="{{ route('admin.category.update', $category->id) }}" method="POST" class="form-horizontal">
                     @csrf
+                    @method('PUT')
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Category Name</label>
                         <div class="col-sm-10">
-                            <input name="name" value="{{ old('name') }}" class="form-control" type="text" placeholder="Name">
+                            <input name="name" value="{{ $category->name??old('name') }}" class="form-control" type="text" placeholder="Name">
                             @error('name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror

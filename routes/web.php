@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Backend\CategoryController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 
 /*

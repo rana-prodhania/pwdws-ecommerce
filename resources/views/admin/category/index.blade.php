@@ -25,22 +25,30 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Slug</th>
-                            <th>Action</th>
+                            <th class="text-center">Action</th>
                         </tr>
                     </thead>
                 
                     <tbody>
-
-                        <tr>
-                            <td>Yuri Berry</td>
-                            <td>Chief Marketing Officer (CMO)</td>
-                            <td>New York</td>
-                            <td>
-                                <a href="" class="btn btn-primary">Edit</a>
-                                <a href="" class="btn btn-danger">Delete</a>
-                            </td>                           
-                        </tr>
-                     
+                        @forelse ($categories as $index => $category)
+                            <tr>
+                                <td>{{ $index+1 }}</td>
+                                <td>{{ $category->name }}</td>
+                                <td>{{ $category->slug }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-primary">Edit</a>
+                                    <form class="d-inline" action="{{ route('admin.category.destroy', $category->id) }}" method="POST" >
+                                        @csrf
+                                        @method('DELETE')
+                                        <button onclick="return confirm('Are you sure you want to delete?')" type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>                           
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4">No Category Found</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

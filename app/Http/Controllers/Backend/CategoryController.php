@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
+use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -12,7 +15,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-       return view('admin.category.index');
+        $categories = Category::all();
+        return view('admin.category.index', compact('categories'));
     }
 
     /**
@@ -26,9 +30,14 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $category = new Category();
+        $category->name = $request->input('name');
+        $category->slug = Str::slug($request->input('name'));
+        $category->save();
+        flash()->addSuccess('Category created successfully');
+        return redirect()->route('admin.category.index');
     }
 
     /**
@@ -36,7 +45,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+       // 
     }
 
     /**
@@ -44,15 +53,21 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return view('admin.category.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CategoryRequest $request, string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->name = $request->input('name');
+        $category->slug = Str::slug($request->input('name'));
+        $category->save();
+        flash()->addSuccess('Category updated successfully');
+        return redirect()->route('admin.category.index');
     }
 
     /**
@@ -60,6 +75,10 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
+        flash()->addSuccess('Category deleted successfully');
+        return to_route('admin.category.index');
+        
     }
 }
